@@ -1,113 +1,162 @@
+"use client";
+
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import Footer from "@/components/Footer";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { ArrowRight, ShieldCheck, Cpu, Landmark, Briefcase } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
+    <main className="relative bg-black min-h-screen text-white overflow-hidden">
+      {/* Cabecera */}
+      <Header />
+
+      {/* Hero: Slider Híbrido + Líneas animadas */}
+      <Hero />
+
+      {/* Resumen Quiénes Somos */}
+      <section className="py-24 px-6 relative z-10 border-b border-white/5">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-7 space-y-6">
+            <span className="text-xs font-mono font-bold tracking-widest text-dicssa-yellow uppercase">
+              {"// CERTEZA Y CALIDAD"}
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-display font-black uppercase tracking-widest leading-none">
+              DICSSA INFRAESTRUCTURA
+            </h2>
+            <div className="w-16 h-1 bg-dicssa-yellow"></div>
+            <p className="text-sm text-gray-300 leading-relaxed font-sans">
+              Somos una constructora mexicana sólida con más de 15 años de experiencia liderando proyectos viales de gran escala. Contamos con un parque de maquinaria moderna propia y personal altamente calificado para entregar carreteras, puentes y viaductos que impulsan el desarrollo nacional.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+              <a
+                href="/quienes-somos"
+                className="px-6 py-3 bg-dicssa-yellow hover:bg-dicssa-yellow-bright text-black font-sans font-bold text-xs uppercase tracking-widest rounded flex items-center justify-center space-x-2 transition-all w-full sm:w-auto"
+              >
+                <span>Conocer Más</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="/quienes-somos#tecnologia"
+                className="px-6 py-3 border border-white/10 hover:bg-white/10 text-white font-sans font-bold text-xs uppercase tracking-widest rounded flex items-center justify-center transition-all w-full sm:w-auto"
+              >
+                Nuestra Maquinaria
+              </a>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 relative h-72 sm:h-96 rounded-lg overflow-hidden border border-white/10 shadow-2xl">
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+              src="/images/imagen1.png"
+              alt="DICSSA Obras"
+              fill
+              className="object-cover opacity-80"
+              sizes="(max-width: 1024px) 100vw, 40vw"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent" />
+            <div className="absolute bottom-5 left-5 bg-black/70 backdrop-blur-sm border border-white/10 p-3.5 rounded">
+              <span className="block text-[18px] font-display font-black text-dicssa-yellow">15+ AÑOS</span>
+              <span className="block text-[9px] font-mono text-white/70 uppercase tracking-widest mt-0.5">En el Sector Vial</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Especialidades Teaser */}
+      <section className="py-24 px-6 relative z-10 bg-dicssa-dark-pure border-b border-white/5">
+        <div className="max-w-6xl mx-auto text-center mb-16">
+          <span className="text-xs font-mono font-bold tracking-widest text-dicssa-yellow uppercase">
+            {"// SOLUCIONES INTEGRALES"}
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-display font-black uppercase tracking-widest mt-2">
+            NUESTRAS LÍNEAS DE TRABAJO
+          </h2>
+          <div className="w-16 h-1 bg-dicssa-yellow mx-auto mt-4"></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="p-6 bg-dicssa-dark border border-white/5 rounded-lg flex flex-col justify-between h-56 hover:border-dicssa-yellow/30 transition-colors">
+            <div className="w-10 h-10 bg-dicssa-yellow/10 rounded flex items-center justify-center text-dicssa-yellow">
+              <Cpu className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xs font-sans font-black text-white uppercase tracking-wider mb-2">Modernización Vial</h3>
+              <p className="text-[11px] text-gray-400 leading-relaxed">Construcción y ensanchamiento de carreteras federales y caminos rurales.</p>
+            </div>
+          </div>
+
+          <div className="p-6 bg-dicssa-dark border border-white/5 rounded-lg flex flex-col justify-between h-56 hover:border-dicssa-yellow/30 transition-colors">
+            <div className="w-10 h-10 bg-dicssa-yellow/10 rounded flex items-center justify-center text-dicssa-yellow">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xs font-sans font-black text-white uppercase tracking-wider">Viaductos y Puentes</h3>
+              <p className="text-[11px] text-gray-400 leading-relaxed">Diseño y edificación de pasos superiores vehiculares (PSV) y pasos deprimidos.</p>
+            </div>
+          </div>
+
+          <div className="p-6 bg-dicssa-dark border border-white/5 rounded-lg flex flex-col justify-between h-56 hover:border-dicssa-yellow/30 transition-colors">
+            <div className="w-10 h-10 bg-dicssa-yellow/10 rounded flex items-center justify-center text-dicssa-yellow">
+              <Landmark className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xs font-sans font-black text-white uppercase tracking-wider">Fresado y Mezclas</h3>
+              <p className="text-[11px] text-gray-400 leading-relaxed">Pavimentación de concreto asfáltico y recuperación profunda de pavimentos.</p>
+            </div>
+          </div>
+
+          <div className="p-6 bg-dicssa-dark border border-white/5 rounded-lg flex flex-col justify-between h-56 hover:border-dicssa-yellow/30 transition-colors">
+            <div className="w-10 h-10 bg-dicssa-yellow/10 rounded flex items-center justify-center text-dicssa-yellow">
+              <Briefcase className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xs font-sans font-black text-white uppercase tracking-wider">Obra Hidráulica</h3>
+              <p className="text-[11px] text-gray-400 leading-relaxed">Sistemas pluviales de drenaje, agua potable y control de escurrimientos.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center mt-12">
+          <a
+            href="/servicios"
+            className="inline-flex items-center space-x-2 text-xs font-sans font-black text-dicssa-yellow uppercase tracking-widest hover:text-white transition-colors"
+          >
+            <span>Ver Todos los Servicios (Multi-Pestaña)</span>
+            <ArrowRight className="w-4 h-4" />
           </a>
         </div>
-      </div>
+      </section>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
+      {/* Banner Call to Action Proyectos */}
+      <section className="py-20 px-6 relative z-10 text-center bg-[radial-gradient(#222_1px,transparent_1px)] [background-size:16px_16px]">
+        <div className="max-w-4xl mx-auto space-y-6">
+          <h2 className="text-3xl sm:text-4xl font-display font-black text-white uppercase tracking-widest leading-tight">
+            ¿Listo para Iniciar un Proyecto Vial con DICSSA?
           </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
+          <p className="text-xs sm:text-sm text-gray-400 max-w-xl mx-auto leading-relaxed">
+            Consulte nuestro mapa interactivo de obras nacionales o contáctese de inmediato con nuestro departamento de licitaciones y contratos viales.
           </p>
-        </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <a
+              href="/proyectos"
+              className="px-8 py-3.5 bg-dicssa-yellow hover:bg-dicssa-yellow-bright text-black font-sans font-black text-xs uppercase tracking-widest rounded transition-all w-full sm:w-auto"
+            >
+              Ver Portafolio de Obras
+            </a>
+            <a
+              href="/contacto"
+              className="px-8 py-3.5 bg-transparent border border-white/20 hover:bg-white/10 text-white font-sans font-black text-xs uppercase tracking-widest rounded transition-all w-full sm:w-auto"
+            >
+              Contactar un Ingeniero
+            </a>
+          </div>
+        </div>
+      </section>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }
