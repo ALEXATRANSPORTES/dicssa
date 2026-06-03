@@ -41,7 +41,7 @@ const clients = [
 
 export default function Home() {
   return (
-    <main className="relative bg-black min-h-screen text-white overflow-hidden">
+    <main className="relative min-h-screen text-white overflow-hidden">
       <Header />
       <Hero />
 
@@ -106,7 +106,7 @@ export default function Home() {
       </section>
 
       {/* ─── Especialidades ─── */}
-      <section id="especialidades" className="py-24 px-6 relative z-10 bg-dicssa-dark-pure border-b border-white/5">
+      <section id="especialidades" className="py-24 px-6 relative z-10 bg-dicssa-dark-pure/70 backdrop-blur-sm border-b border-white/5">
         <div className="max-w-6xl mx-auto text-center mb-16">
           <span className="text-xs font-mono font-bold tracking-widest text-dicssa-yellow uppercase">
             {"// SOLUCIONES INTEGRALES"}

@@ -3,7 +3,7 @@ import { Montserrat, Bebas_Neue, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
-import AsphaltShader from "@/components/AsphaltShader";
+import RoadBackground from "@/components/RoadBackground";
 import DustParticles from "@/components/DustParticles";
 
 // Configuración de fuentes
@@ -173,8 +173,8 @@ export default function RootLayout({
           {/* Custom Cursor */}
           <CustomCursor />
 
-          {/* WebGL Asphalt Shader & Particles as absolute background */}
-          <AsphaltShader />
+          {/* Fondo premium: carretera animada que se ilumina con el mouse + polvo sutil */}
+          <RoadBackground />
           <DustParticles />
 
           {children}

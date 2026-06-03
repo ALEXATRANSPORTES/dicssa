@@ -5,7 +5,7 @@ import ProjectMap from "@/components/ProjectMap";
 
 export default function ProyectosPage() {
   return (
-    <main className="relative bg-black min-h-screen text-white overflow-hidden">
+    <main className="relative min-h-screen text-white overflow-hidden">
       <Header />
 
       {/* Hero */}

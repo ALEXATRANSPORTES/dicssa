@@ -4,7 +4,7 @@ import Contact from "@/components/Contact";
 
 export default function ContactoPage() {
   return (
-    <main className="relative bg-black min-h-screen text-white overflow-hidden">
+    <main className="relative min-h-screen text-white overflow-hidden">
       <Header />
 
       {/* Hero */}

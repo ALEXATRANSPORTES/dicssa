@@ -24,7 +24,7 @@ export default function BlogPage() {
   const rest = blogPosts.slice(1);
 
   return (
-    <main className="relative bg-black min-h-screen text-white overflow-hidden">
+    <main className="relative min-h-screen text-white overflow-hidden">
       <Header />
 
       {/* Hero */}

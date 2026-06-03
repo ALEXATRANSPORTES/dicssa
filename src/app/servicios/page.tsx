@@ -148,7 +148,7 @@ export default function Servicios() {
   const filteredServices = servicesData.filter((s) => s.category === activeTab);
 
   return (
-    <main className="relative bg-black min-h-screen text-white overflow-hidden">
+    <main className="relative min-h-screen text-white overflow-hidden">
       <Header />
 
       {/* Hero */}

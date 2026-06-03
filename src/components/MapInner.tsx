@@ -2,7 +2,7 @@
 
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import L from "leaflet";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 
 // Estructura de proyectos
 interface ProjectLocation {
@@ -228,7 +228,7 @@ export default function MapInner() {
 
       {/* Marcadores e Hilos de Conexión de Proyectos */}
       {projects.map((proj) => (
-        <div key={proj.id}>
+        <Fragment key={proj.id}>
           {/* Conexión vial animada */}
           <Polyline
             positions={[cdmxCoords, proj.coords]}
@@ -254,7 +254,7 @@ export default function MapInner() {
               </div>
             </Popup>
           </Marker>
-        </div>
+        </Fragment>
       ))}
     </MapContainer>
   );

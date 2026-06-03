@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function QuienesSomos() {
   return (
-    <main className="relative bg-black min-h-screen text-white overflow-hidden">
+    <main className="relative min-h-screen text-white overflow-hidden">
       <Header />
 
       {/* Hero de Subpágina */}

@@ -23,7 +23,7 @@ export default function ClientesPage() {
   ];
 
   return (
-    <main className="relative bg-black min-h-screen text-white overflow-hidden">
+    <main className="relative min-h-screen text-white overflow-hidden">
       <Header />
 
       {/* Hero */}
