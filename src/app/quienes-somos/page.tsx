@@ -1,7 +1,21 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import About from "@/components/About";
 import TechSocial from "@/components/TechSocial";
+
+export const metadata: Metadata = {
+  title: "Quiénes Somos | DICSSA Infraestructura — 15 Años en Obra Vial",
+  description:
+    "Conoce la historia, misión y capacidad técnica de DICSSA Infraestructura SA de CV. Constructora mexicana especializada en carreteras, puentes y pavimentos con más de 15 años de experiencia y maquinaria propia.",
+  alternates: { canonical: "/quienes-somos" },
+  openGraph: {
+    title: "Quiénes Somos | DICSSA Infraestructura",
+    description: "15+ años construyendo infraestructura vial en México con maquinaria propia y personal calificado.",
+    url: "https://www.grupodicssa.mx/quienes-somos",
+    images: [{ url: "/images/imagen1.png", width: 1200, height: 630 }],
+  },
+};
 
 export default function QuienesSomos() {
   return (

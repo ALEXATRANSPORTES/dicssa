@@ -1,4 +1,5 @@
 "use client";
+// metadata se define en el server parent — este es un Client Component por useState
 
 import { useState } from "react";
 import Header from "@/components/Header";

@@ -34,6 +34,48 @@
     <loc>https://www.grupodicssa.mx/contacto</loc>
     <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.grupodicssa.mx/blog</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.grupodicssa.mx/blog/que-es-el-fresado-y-encarpetado-de-carreteras</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.grupodicssa.mx/blog/tipos-de-pavimento-en-mexico-asfaltico-vs-hidraulico</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.grupodicssa.mx/blog/como-funciona-una-licitacion-de-obra-publica-en-mexico</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.grupodicssa.mx/blog/senalamiento-vial-horizontal-vertical-normas-sct</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.grupodicssa.mx/blog/tren-maya-impacto-infraestructura-carretera-mexico</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.grupodicssa.mx/blog/mantenimiento-carreteras-conservacion-rutinaria-periodica</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 </urlset>
