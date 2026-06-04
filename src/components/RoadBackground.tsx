@@ -3,10 +3,10 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Fondo premium: carriles de carretera que serpentean con curvas suaves.
- * Las líneas de carril fluyen lentamente y se "encienden" en amarillo
- * siguiendo la posición del mouse, como faros iluminando el asfalto.
- * Respeta prefers-reduced-motion (queda estático y sutil).
+ * Fondo premium: una autopista en perspectiva que se aleja hacia el horizonte,
+ * con curvas suaves y líneas de carril que fluyen hacia el espectador.
+ * Los carriles se iluminan en amarillo siguiendo el mouse (efecto faros).
+ * Respeta prefers-reduced-motion.
  */
 export default function RoadBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -19,8 +19,7 @@ export default function RoadBackground() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    let w = 0;
-    let h = 0;
+    let w = 0, h = 0;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const resize = () => {
@@ -36,138 +35,163 @@ export default function RoadBackground() {
     resize();
     window.addEventListener("resize", resize);
 
-    // Mouse suavizado (con lerp para que el faro siga con inercia)
-    const mouse = { x: -9999, y: -9999 };
-    const smooth = { x: -9999, y: -9999 };
+    // Mouse normalizado (-1..1) con inercia
+    const mouse = { x: 0, y: 0 };
+    const smooth = { x: 0, y: 0 };
     const onMove = (e: MouseEvent) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = (e.clientY / window.innerHeight) * 2 - 1;
     };
     window.addEventListener("mousemove", onMove, { passive: true });
-    const onLeave = () => {
-      mouse.x = -9999;
-      mouse.y = -9999;
-    };
-    window.addEventListener("mouseout", onLeave);
 
-    // Definición de carriles. Cada carril es una curva vertical que ondula.
-    const LANES = 7;
-    const lanes = Array.from({ length: LANES }, (_, i) => {
-      const t = LANES === 1 ? 0.5 : i / (LANES - 1);
-      return {
-        baseX: t, // posición horizontal relativa (0..1)
-        amp: 60 + Math.random() * 90, // amplitud de la curva en px
-        freq: 0.8 + Math.random() * 1.4, // ondulaciones a lo alto
-        phase: Math.random() * Math.PI * 2,
-        speed: 0.06 + Math.random() * 0.08, // velocidad de deriva de la curva
-      };
-    });
-
-    const GLOW_RADIUS = 240; // radio de iluminación del mouse
-    const STEP = 16; // resolución vertical del muestreo (px)
-
+    const NUM_LANE_LINES = 5; // 4 carriles => 5 líneas divisorias
     let raf = 0;
-    let time = 0;
+    let t = 0;
 
-    const laneX = (lane: (typeof lanes)[number], yNorm: number, t: number) => {
-      const base = lane.baseX * w;
-      const wave =
-        Math.sin(yNorm * Math.PI * lane.freq + lane.phase + t * lane.speed) * lane.amp +
-        Math.sin(yNorm * Math.PI * lane.freq * 2.3 + lane.phase * 1.7) * (lane.amp * 0.25);
-      return base + wave;
+    // Posición horizontal del centro de la carretera a una profundidad d (0=horizonte, 1=frente)
+    const centerAt = (d: number, time: number, vpx: number) => {
+      // El centro interpola entre el punto de fuga (arriba) y el frente (abajo),
+      // con una curva sinusoidal que ondula con el tiempo (carretera serpenteante).
+      const sway = 1 - d; // la curva afecta más cerca del horizonte
+      const curve = Math.sin(d * 1.6 + time * 0.0005) * 70 * sway +
+                    Math.sin(d * 3.2 + time * 0.0003) * 22 * sway;
+      return vpx + curve;
+    };
+
+    // Mapea profundidad d (0..1) a coordenada Y con perspectiva
+    const horizonRatio = 0.40; // el horizonte está al 40% de la altura
+    const yAt = (d: number) => {
+      const horizonY = h * horizonRatio;
+      // Perspectiva: las franjas se separan más cerca del frente
+      return horizonY + (h - horizonY) * Math.pow(d, 1.9);
+    };
+
+    // Semiancho de la carretera a profundidad d
+    const halfWidthAt = (d: number) => {
+      const maxHalf = w * 0.42;
+      return maxHalf * Math.pow(d, 1.55) + 2;
     };
 
     const draw = () => {
-      time += reduced ? 0 : 1;
+      if (!reduced) t += 16;
 
-      // Inercia del faro del mouse
-      smooth.x += (mouse.x - smooth.x) * 0.08;
-      smooth.y += (mouse.y - smooth.y) * 0.08;
+      smooth.x += (mouse.x - smooth.x) * 0.05;
+      smooth.y += (mouse.y - smooth.y) * 0.05;
 
-      // Fondo: gradiente de asfalto oscuro
+      // Punto de fuga, desplazado suavemente con el mouse (parallax)
+      const vpx = w / 2 + smooth.x * w * 0.12;
+
+      // Fondo: gradiente de cielo/asfalto oscuro
       const bg = ctx.createLinearGradient(0, 0, 0, h);
-      bg.addColorStop(0, "#0a0a0a");
-      bg.addColorStop(0.5, "#070707");
+      bg.addColorStop(0, "#050505");
+      bg.addColorStop(horizonRatio, "#0c0b08");
       bg.addColorStop(1, "#000000");
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, w, h);
 
-      const dashFlow = (time * 0.9) % 34; // flujo de las líneas discontinuas
+      // Resplandor del horizonte (amanecer cálido sutil)
+      const horizonY = h * horizonRatio;
+      const halo = ctx.createRadialGradient(vpx, horizonY, 0, vpx, horizonY, w * 0.5);
+      halo.addColorStop(0, "rgba(245,197,24,0.10)");
+      halo.addColorStop(0.4, "rgba(245,197,24,0.03)");
+      halo.addColorStop(1, "rgba(245,197,24,0)");
+      ctx.fillStyle = halo;
+      ctx.fillRect(0, 0, w, h);
 
-      for (const lane of lanes) {
-        // 1) Trazo base tenue del carril (línea continua gris)
-        ctx.beginPath();
-        for (let y = -20; y <= h + 20; y += STEP) {
-          const yNorm = y / h;
-          const x = laneX(lane, yNorm, time);
-          if (y === -20) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.strokeStyle = "rgba(120,120,120,0.07)";
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([]);
-        ctx.stroke();
-
-        // 2) Línea discontinua de carril (flujo)
-        ctx.beginPath();
-        for (let y = -20; y <= h + 20; y += STEP) {
-          const yNorm = y / h;
-          const x = laneX(lane, yNorm, time);
-          if (y === -20) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.strokeStyle = "rgba(245,197,24,0.05)";
-        ctx.lineWidth = 2;
-        ctx.setLineDash([18, 16]);
-        ctx.lineDashOffset = -dashFlow;
-        ctx.stroke();
-
-        // 3) Iluminación por mouse: segmentos cercanos al faro brillan en amarillo
-        if (smooth.x > -9000) {
-          ctx.setLineDash([]);
-          for (let y = -20; y <= h + 20; y += STEP) {
-            const yNorm = y / h;
-            const x1 = laneX(lane, yNorm, time);
-            const y2 = y + STEP;
-            const x2 = laneX(lane, y2 / h, time);
-
-            const midX = (x1 + x2) / 2;
-            const midY = (y + y2) / 2;
-            const dx = midX - smooth.x;
-            const dy = midY - smooth.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < GLOW_RADIUS) {
-              const intensity = 1 - dist / GLOW_RADIUS;
-              ctx.beginPath();
-              ctx.moveTo(x1, y);
-              ctx.lineTo(x2, y2);
-              ctx.strokeStyle = `rgba(245,197,24,${(intensity * 0.85).toFixed(3)})`;
-              ctx.lineWidth = 1.5 + intensity * 2.5;
-              ctx.shadowColor = "rgba(245,197,24,0.8)";
-              ctx.shadowBlur = intensity * 18;
-              ctx.stroke();
-            }
-          }
-          ctx.shadowBlur = 0;
-        }
+      // Superficie de la carretera (polígono oscuro con leve degradado)
+      const steps = 60;
+      ctx.beginPath();
+      // borde izquierdo desde horizonte al frente
+      for (let i = 0; i <= steps; i++) {
+        const d = i / steps;
+        const cx = centerAt(d, t, vpx);
+        const x = cx - halfWidthAt(d);
+        const y = yAt(d);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       }
+      // borde derecho de vuelta
+      for (let i = steps; i >= 0; i--) {
+        const d = i / steps;
+        const cx = centerAt(d, t, vpx);
+        const x = cx + halfWidthAt(d);
+        const y = yAt(d);
+        ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      const roadGrad = ctx.createLinearGradient(0, horizonY, 0, h);
+      roadGrad.addColorStop(0, "rgba(28,28,30,0.0)");
+      roadGrad.addColorStop(0.5, "rgba(26,26,28,0.7)");
+      roadGrad.addColorStop(1, "rgba(16,16,18,0.95)");
+      ctx.fillStyle = roadGrad;
+      ctx.fill();
 
-      // Halo radial cálido alrededor del faro
-      if (smooth.x > -9000) {
-        const glow = ctx.createRadialGradient(
-          smooth.x, smooth.y, 0,
-          smooth.x, smooth.y, GLOW_RADIUS
-        );
-        glow.addColorStop(0, "rgba(245,197,24,0.06)");
-        glow.addColorStop(1, "rgba(245,197,24,0)");
-        ctx.fillStyle = glow;
-        ctx.fillRect(
-          smooth.x - GLOW_RADIUS,
-          smooth.y - GLOW_RADIUS,
-          GLOW_RADIUS * 2,
-          GLOW_RADIUS * 2
-        );
+      const mouseX = ((smooth.x + 1) / 2) * w;
+      const mouseY = ((smooth.y + 1) / 2) * h;
+      const GLOW = w * 0.18;
+
+      // Líneas de carril
+      for (let l = 0; l < NUM_LANE_LINES; l++) {
+        const laneFrac = NUM_LANE_LINES === 1 ? 0 : (l / (NUM_LANE_LINES - 1)) * 2 - 1; // -1..1
+        const isEdge = l === 0 || l === NUM_LANE_LINES - 1;
+
+        // Construir puntos de la línea
+        const pts: { x: number; y: number; d: number }[] = [];
+        for (let i = 0; i <= steps; i++) {
+          const d = i / steps;
+          const cx = centerAt(d, t, vpx);
+          const x = cx + laneFrac * halfWidthAt(d);
+          pts.push({ x, y: yAt(d), d });
+        }
+
+        if (isEdge) {
+          // Líneas de borde: continuas, sólidas
+          ctx.beginPath();
+          pts.forEach((p, i) => (i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y)));
+          ctx.strokeStyle = "rgba(245,197,24,0.40)";
+          ctx.lineWidth = 2.2;
+          ctx.setLineDash([]);
+          ctx.stroke();
+        } else {
+          // Líneas internas discontinuas que fluyen hacia el frente
+          // Dibujamos guiones cuyo tamaño crece con la profundidad (perspectiva)
+          const flow = (t * 0.0009) % 1;
+          for (let i = 0; i < steps; i++) {
+            const d = (i / steps + flow) % 1;
+            // Patrón de guion: visible la mitad del ciclo
+            const seg = (d * 9) % 1;
+            if (seg > 0.5) continue;
+            const p1 = pts[i];
+            const p2 = pts[i + 1];
+            const alpha = 0.25 + d * 0.55;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(250,240,210,${alpha.toFixed(3)})`;
+            ctx.lineWidth = 1 + d * 3.5;
+            ctx.stroke();
+          }
+        }
+
+        // Iluminación por mouse (faros): refuerza segmentos cercanos al cursor
+        for (let i = 0; i < steps; i++) {
+          const p1 = pts[i];
+          const p2 = pts[i + 1];
+          const mx = (p1.x + p2.x) / 2;
+          const my = (p1.y + p2.y) / 2;
+          const dist = Math.hypot(mx - mouseX, my - mouseY);
+          if (dist < GLOW) {
+            const inten = 1 - dist / GLOW;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(245,197,24,${(inten * 0.9).toFixed(3)})`;
+            ctx.lineWidth = 1.5 + inten * 3 + p1.d * 2;
+            ctx.shadowColor = "rgba(245,197,24,0.9)";
+            ctx.shadowBlur = inten * 16;
+            ctx.stroke();
+          }
+        }
+        ctx.shadowBlur = 0;
       }
 
       raf = requestAnimationFrame(draw);
@@ -179,7 +203,6 @@ export default function RoadBackground() {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseout", onLeave);
     };
   }, []);
 
@@ -187,7 +210,7 @@ export default function RoadBackground() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="fixed inset-0 w-full h-full pointer-events-none -z-20"
+      className="fixed inset-0 w-full h-full pointer-events-none z-0"
     />
   );
 }
