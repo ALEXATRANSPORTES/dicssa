@@ -34,6 +34,7 @@ jobs:
       - name: Build static export (GitHub Pages)
         env:
           GITHUB_PAGES: "true"
+          NEXT_PUBLIC_BASE_PATH: "/dicssa"
         run: npm run build
 
       - name: Fix root-absolute links and assets for the /dicssa subpath

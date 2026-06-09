@@ -14,18 +14,24 @@ const nextConfig = {
         assetPrefix: repoBasePath,
       }
     : {}),
-  images: {
-    // GitHub Pages no tiene el optimizador de imágenes de Next → usar sin optimizar.
-    unoptimized: isPages,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        port: "",
-        pathname: "/**",
+  images: isPages
+    ? {
+        // GitHub Pages no tiene el optimizador de Next. Un loader custom sirve
+        // las imágenes sin optimizar y, sobre todo, les antepone el basePath
+        // (next/image no lo hace solo), arreglando las imágenes en /dicssa.
+        loader: "custom",
+        loaderFile: "./image-loader.js",
+      }
+    : {
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "images.unsplash.com",
+            port: "",
+            pathname: "/**",
+          },
+        ],
       },
-    ],
-  },
 };
 
 export default nextConfig;
