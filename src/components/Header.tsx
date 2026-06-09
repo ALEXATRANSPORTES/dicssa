@@ -68,14 +68,20 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* CTA Phone Button */}
-          <div className="hidden lg:flex items-center space-x-4">
+          {/* CTA */}
+          <div className="hidden lg:flex items-center space-x-3">
             <a
               href="tel:5525897307"
-              className="flex items-center space-x-2 text-xs font-mono font-bold text-white bg-dicssa-dark-gray hover:bg-dicssa-yellow hover:text-black px-4 py-2 rounded-full border border-white/10 hover:border-dicssa-yellow transition-all duration-300"
+              aria-label="Llamar a DICSSA"
+              className="flex items-center justify-center w-9 h-9 text-white bg-dicssa-dark-gray hover:bg-white/10 rounded-full border border-white/10 transition-all duration-300"
             >
-              <PhoneCall className="w-3.5 h-3.5" />
-              <span>(55) 2589 7307</span>
+              <PhoneCall className="w-4 h-4" />
+            </a>
+            <a
+              href="/cotizacion"
+              className="flex items-center space-x-2 text-xs font-sans font-black uppercase tracking-widest text-black bg-dicssa-yellow hover:bg-dicssa-yellow-bright px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-[1.04]"
+            >
+              <span>Cotizar</span>
             </a>
           </div>
 

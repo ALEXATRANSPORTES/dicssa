@@ -6,6 +6,7 @@ import CustomCursor from "@/components/CustomCursor";
 import RoadBackground from "@/components/RoadBackground";
 import DustParticles from "@/components/DustParticles";
 import ScrollProgress from "@/components/ScrollProgress";
+import CookieBanner from "@/components/CookieBanner";
 
 // Configuración de fuentes
 const montserrat = Montserrat({
@@ -182,6 +183,9 @@ export default function RootLayout({
           <DustParticles />
 
           {children}
+
+          {/* Banner de consentimiento de cookies (LFPDPPP) */}
+          <CookieBanner />
         </SmoothScroll>
       </body>
     </html>

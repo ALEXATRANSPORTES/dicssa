@@ -69,13 +69,15 @@ export default function Footer() {
             Secciones
           </h3>
           <div className="flex flex-col space-y-2 text-xs font-sans text-gray-400">
-            <a href="#quienes-somos" className="hover:text-dicssa-yellow transition-colors">Quiénes Somos</a>
-            <a href="#servicios" className="hover:text-dicssa-yellow transition-colors">Servicios Principales</a>
-            <a href="#tecnologia" className="hover:text-dicssa-yellow transition-colors">Nuestra Tecnología</a>
-            <a href="#responsabilidad" className="hover:text-dicssa-yellow transition-colors">Responsabilidad Social</a>
-            <a href="#portafolio" className="hover:text-dicssa-yellow transition-colors">Proyectos Realizados</a>
-            <a href="#clientes" className="hover:text-dicssa-yellow transition-colors">Nuestros Clientes</a>
-            <a href="#contacto" className="hover:text-dicssa-yellow transition-colors">Contacto y Soporte</a>
+            <a href="/quienes-somos" className="hover:text-dicssa-yellow transition-colors">Quiénes Somos</a>
+            <a href="/servicios" className="hover:text-dicssa-yellow transition-colors">Servicios</a>
+            <a href="/proyectos" className="hover:text-dicssa-yellow transition-colors">Proyectos y Galería</a>
+            <a href="/clientes" className="hover:text-dicssa-yellow transition-colors">Clientes</a>
+            <a href="/blog" className="hover:text-dicssa-yellow transition-colors">Blog</a>
+            <a href="/cotizacion" className="hover:text-dicssa-yellow transition-colors">Cotización</a>
+            <a href="/bolsa-de-trabajo" className="hover:text-dicssa-yellow transition-colors">Bolsa de Trabajo</a>
+            <a href="/aviso-de-privacidad" className="hover:text-dicssa-yellow transition-colors">Aviso de Privacidad</a>
+            <a href="/portal" className="hover:text-dicssa-yellow transition-colors">Área de Clientes</a>
           </div>
         </div>
 

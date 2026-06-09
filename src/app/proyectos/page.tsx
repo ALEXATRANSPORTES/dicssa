@@ -2,6 +2,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Portfolio from "@/components/Portfolio";
 import ProjectMap from "@/components/ProjectMap";
+import Gallery from "@/components/Gallery";
+import Testimonials from "@/components/Testimonials";
 
 export default function ProyectosPage() {
   return (
@@ -46,6 +48,25 @@ export default function ProyectosPage() {
           </div>
         </div>
       </section>
+
+      {/* Galería de obra con lightbox */}
+      <section className="py-24 px-6 relative z-10 border-t border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-xs font-mono font-bold tracking-widest text-dicssa-yellow uppercase">
+              {"// GALERÍA DE OBRA"}
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-display font-black text-white uppercase tracking-widest mt-2 mb-4">
+              EVIDENCIA FOTOGRÁFICA
+            </h2>
+            <div className="w-16 h-1 bg-dicssa-yellow mx-auto" />
+          </div>
+          <Gallery />
+        </div>
+      </section>
+
+      {/* Testimonios */}
+      <Testimonials />
 
       <Footer />
     </main>
