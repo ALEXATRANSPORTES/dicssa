@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Hammer, Menu, X, PhoneCall } from "lucide-react";
+import { Menu, X, PhoneCall } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -40,20 +41,16 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo DICSSA */}
-          <a href="/" className="flex items-center space-x-2.5 group">
-            <div className="relative flex items-center justify-center w-10 h-10 bg-dicssa-yellow text-black font-black rounded border border-black overflow-hidden">
-              <span className="text-xl font-display tracking-tighter">D</span>
-              <motion.div 
-                className="absolute inset-0 bg-white/20 -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"
+          <a href="/" className="flex items-center group" aria-label="DICSSA Infraestructura — Inicio">
+            <div className="bg-white rounded-lg px-3 py-2 shadow-md shadow-black/30 ring-1 ring-white/10 transition-transform duration-300 group-hover:scale-[1.03]">
+              <Image
+                src="/images/logo.png"
+                alt="DICSSA Infraestructura"
+                width={140}
+                height={55}
+                priority
+                className={`w-auto transition-all duration-300 ${scrolled ? "h-7" : "h-9"}`}
               />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-display tracking-widest font-black leading-none text-white group-hover:text-dicssa-yellow transition-colors">
-                DICSSA
-              </span>
-              <span className="text-[9px] font-mono tracking-widest font-bold text-dicssa-gray-light leading-none mt-0.5">
-                INFRAESTRUCTURA
-              </span>
             </div>
           </a>
 
@@ -105,13 +102,8 @@ export default function Header() {
           >
             {/* Header in mobile menu */}
             <div className="p-6 flex items-center justify-between border-b border-white/10">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-dicssa-yellow text-black font-black rounded flex items-center justify-center font-display text-lg">
-                  D
-                </div>
-                <span className="text-md font-display font-black tracking-widest text-white">
-                  DICSSA
-                </span>
+              <div className="bg-white rounded-lg px-2.5 py-1.5">
+                <Image src="/images/logo.png" alt="DICSSA Infraestructura" width={120} height={47} className="h-7 w-auto" />
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}

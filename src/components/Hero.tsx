@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { HardHat, ChevronRight } from "lucide-react";
+import HeroShowcase from "./HeroShowcase";
 
 const stats = [
   { value: "15+", label: "Años de experiencia" },
@@ -25,7 +26,7 @@ export default function Hero() {
           un velo de legibilidad y degradado inferior. */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/40 via-transparent to-black pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pt-32 pb-20">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pt-32 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div className="max-w-3xl">
           <motion.div
             custom={0}
@@ -45,7 +46,7 @@ export default function Hero() {
             variants={fade}
             initial="hidden"
             animate="show"
-            className="text-5xl md:text-7xl lg:text-8xl font-display font-black tracking-widest text-white leading-[0.92] uppercase mb-6 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]"
+            className="text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-widest text-white leading-[0.92] uppercase mb-6 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]"
           >
             CONSTRUIMOS<br />
             EL <span className="text-dicssa-yellow">CAMINO</span><br />
@@ -99,6 +100,11 @@ export default function Hero() {
               </div>
             ))}
           </motion.div>
+        </div>
+
+        {/* Columna derecha: ventana flotante con transiciones de obras */}
+        <div className="relative lg:pl-8">
+          <HeroShowcase />
         </div>
       </div>
 

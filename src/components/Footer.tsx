@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowUp, Milestone } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowUp } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -17,13 +17,8 @@ export default function Footer() {
         
         {/* Columna 1: Info General (4 Cols) */}
         <div className="lg:col-span-4 flex flex-col space-y-5">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-dicssa-yellow text-black font-black rounded flex items-center justify-center font-display text-lg">
-              D
-            </div>
-            <span className="text-md font-display font-black tracking-widest text-white">
-              DICSSA
-            </span>
+          <div className="bg-white rounded-lg px-3 py-2 inline-block w-fit shadow-md shadow-black/30">
+            <Image src="/images/logo.png" alt="DICSSA Infraestructura" width={150} height={59} className="h-10 w-auto" />
           </div>
           <p className="text-xs text-gray-400 font-sans leading-relaxed">
             Dicssa Infraestructura SA de CV es una empresa constructora mexicana sólida con más de 15 años de experiencia en pavimentos, viaductos y drenaje sanitario.

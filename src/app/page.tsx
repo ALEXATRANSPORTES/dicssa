@@ -78,8 +78,8 @@ export default function Home() {
 
           <Reveal direction="left" delay={0.15} className="lg:col-span-5">
             <ParallaxImage
-              src="/images/imagen1.png"
-              alt="DICSSA — Obras de infraestructura vial"
+              src="/images/d6.png"
+              alt="DICSSA — Fresado y encarpetado con maquinaria propia"
               className="h-80 sm:h-[440px] rounded-xl border border-white/10 shadow-2xl shadow-black/50"
               imgClassName="opacity-90"
             >
@@ -176,8 +176,8 @@ export default function Home() {
 
           <Reveal direction="left" delay={0.15}>
             <ParallaxImage
-              src="/images/imagen2.jpeg"
-              alt="DICSSA — Proyectos de infraestructura"
+              src="/images/d3.png"
+              alt="DICSSA — Terracerías y modernización vial"
               className="h-80 sm:h-[460px] rounded-xl border border-white/10 shadow-2xl shadow-black/50"
               imgClassName="opacity-85"
             >
