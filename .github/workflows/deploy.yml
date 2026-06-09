@@ -1,0 +1,82 @@
+name: Deploy demo to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Permite un solo despliegue concurrente
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static export (GitHub Pages)
+        env:
+          GITHUB_PAGES: "true"
+        run: npm run build
+
+      - name: Fix root-absolute links and assets for the /dicssa subpath
+        # Los enlaces <a href="/..."> e imágenes <img src="/..."> no llevan basePath
+        # automáticamente. Aquí se les añade /dicssa sin tocar los ya prefijados.
+        run: |
+          node -e '
+            const fs = require("fs");
+            const path = require("path");
+            const root = "out";
+            const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => {
+              const p = path.join(d, e.name);
+              return e.isDirectory() ? walk(p) : [p];
+            });
+            const files = walk(root).filter((f) => f.endsWith(".html"));
+            let changed = 0;
+            for (const f of files) {
+              const html = fs.readFileSync(f, "utf8");
+              const fixed = html
+                .replace(/href="\/(?!dicssa\/)/g, "href=\"/dicssa/")
+                .replace(/src="\/(?!dicssa\/)/g, "src=\"/dicssa/")
+                .replace(/srcSet="\/(?!dicssa\/)/g, "srcSet=\"/dicssa/")
+                .replace(/srcset="\/(?!dicssa\/)/g, "srcset=\"/dicssa/");
+              if (fixed !== html) { fs.writeFileSync(f, fixed); changed++; }
+            }
+            console.log("HTML files updated:", changed);
+          '
+
+      - name: Disable Jekyll (serve _next folder)
+        run: touch out/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
