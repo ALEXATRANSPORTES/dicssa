@@ -44,7 +44,7 @@ export default function RoadBackground() {
     };
     window.addEventListener("mousemove", onMove, { passive: true });
 
-    const NUM_LANE_LINES = 5; // 4 carriles => 5 líneas divisorias
+    const NUM_LANE_LINES: number = 5; // 4 carriles => 5 líneas divisorias
     let raf = 0;
     let t = 0;
 

@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import RoadBackground from "@/components/RoadBackground";
 import DustParticles from "@/components/DustParticles";
+import ScrollProgress from "@/components/ScrollProgress";
 
 // Configuración de fuentes
 const montserrat = Montserrat({
@@ -170,6 +171,9 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <SmoothScroll>
+          {/* Barra de progreso de scroll */}
+          <ScrollProgress />
+
           {/* Custom Cursor */}
           <CustomCursor />
 
